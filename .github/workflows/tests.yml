@@ -1,0 +1,73 @@
+name: Tests
+
+on: push
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        python-version: [3.9]
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:6
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache python packages
+        id: cache
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-python-packages
+        with:
+          path: .venv
+          key: ${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          if echo ${{ steps.cache.outputs.cache-hit }} | grep -c "true"
+          then
+            echo "Cache hit - skipping dependency installation"
+          else
+            python -m venv .venv
+            source .venv/bin/activate
+            pip install poetry==1.1.6
+            poetry config virtualenvs.in-project true
+            cd backend
+            poetry install
+          fi
+
+      - name: Run tests
+        run: |
+          source .venv/bin/activate
+          cd backend 
+          ./scripts/test
