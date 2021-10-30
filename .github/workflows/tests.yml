@@ -54,17 +54,12 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
-          if echo ${{ steps.cache.outputs.cache-hit }} | grep -c "true"
-          then
-            echo "Cache hit - skipping dependency installation"
-          else
             python -m venv .venv
             source .venv/bin/activate
             pip install poetry==1.1.6
             poetry config virtualenvs.in-project true
             cd backend
             poetry install
-          fi
 
       - name: Run tests
         run: |

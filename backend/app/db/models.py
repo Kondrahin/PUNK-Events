@@ -41,12 +41,12 @@ class CRUDMixin(Generic[T]):
             await session.execute(query)
 
     @classmethod
-    async def get(cls, id: int) -> T:  # noqa: WPS125
-        """Get object by id."""
-        query = select(cls).where(cls.id == id)
+    async def get(cls, **kwargs: Any) -> T:  # noqa: WPS125
+        """Get object by kwargs."""
+        query = select(cls).filter_by(**kwargs)
         async with session.begin():
             rows = await session.execute(query)
-        return rows.scalars().one()
+        return rows.scalars().unique().one()
 
     @classmethod
     async def all(cls) -> List[T]:  # noqa: WPS125
@@ -80,7 +80,6 @@ class User(Base, CRUDMixin):
     uuid: UUID = sa.Column(postgresql.UUID(as_uuid=True), nullable=False, unique=True)
     email: EmailStr = sa.Column(sa.String, nullable=False)
     full_name: str = sa.Column(sa.String, nullable=False)
-    token: str = sa.Column(sa.String, nullable=True)
     events = relationship(
         "Event",
         secondary=association_table,
@@ -125,6 +124,9 @@ class Comment(Base, CRUDMixin):
     data: str = sa.Column(sa.String(), nullable=False)  # noqa: WPS110
     user_uuid: UUID = sa.Column(
         postgresql.UUID(as_uuid=True), sa.ForeignKey("user.uuid")
+    )
+    event_uuid: UUID = sa.Column(
+        postgresql.UUID(as_uuid=True), sa.ForeignKey("event.uuid")
     )
     created_datetime: datetime = sa.Column(sa.DateTime(timezone=True), nullable=False)
 

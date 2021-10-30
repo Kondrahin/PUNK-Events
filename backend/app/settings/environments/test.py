@@ -12,5 +12,10 @@ class TestAppSettings(AppSettings):
     POSTGRES_DSN: str = "postgresql://postgres:postgres@localhost/postgres"
     REDIS_DSN: str = "redis://localhost/0"
 
+    # Google authentication
+    SECRET_KEY: str = "secret"
+    GOOGLE_CLIENT_ID: str = "client_id"
+    GOOGLE_CLIENT_SECRET: str = "client_secret"
+
     class Config(AppSettings.Config):  # noqa: WPS431
         env_file = ".env"

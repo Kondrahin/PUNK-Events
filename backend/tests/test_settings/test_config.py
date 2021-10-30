@@ -10,6 +10,9 @@ def test_credentials_validation():
         SQL_DEBUG=True,
         POSTGRES_DSN="postgres://postgres:postgres@localhost/postgres",
         REDIS_DSN="redis://localhost/0",
+        SECRET_KEY="secret",
+        GOOGLE_CLIENT_ID="client_id",
+        GOOGLE_CLIENT_SECRET="client_secret",
     )
     with pytest.raises(ValidationError):
         AppSettings(

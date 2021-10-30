@@ -1,7 +1,8 @@
 """Application with configuration for events, routers and middleware."""
 from fastapi import FastAPI
+from starlette.middleware.sessions import SessionMiddleware
 
-from app.api.routers import router
+from app.api.api_v1.routers import api_router
 from app.settings.config import get_app_settings
 from app.settings.events import shutdown, startup
 
@@ -21,8 +22,8 @@ def get_application() -> FastAPI:
     )
 
     application.add_event_handler("shutdown", shutdown())
-
-    application.include_router(router)
+    application.add_middleware(SessionMiddleware, secret_key=config.SECRET_KEY)
+    application.include_router(api_router)
 
     return application
 
