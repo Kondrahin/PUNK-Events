@@ -9,7 +9,7 @@ from starlette.config import Config
 from starlette.requests import Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from app.api.api_v1.dependencies.google_authentication import (
+from app.api.v1.dependencies.google_authentication import (
     get_google_api_adapter_dependency,
     get_token_data_dependency,
 )
@@ -32,7 +32,7 @@ oauth.register(
 
 @router.get("/")
 async def homepage(request: Request) -> HTMLResponse:
-    return HTMLResponse('<a href="/api_v1/login">login</a>')
+    return HTMLResponse('<a href="/api/v1/login">login</a>')
 
 
 @router.get("/login")

@@ -1,3 +1,3 @@
 # PUNK Events
 
-Сайт для размещения мероприятий для студентов СПБГУ.
+Website for hosting events for St. Petersburg State University students.

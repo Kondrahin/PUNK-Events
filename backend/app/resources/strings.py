@@ -35,3 +35,6 @@ lookup = TemplateFormatterLookup(
     input_encoding="utf-8",
     strict_undefined=True,
 )
+
+EVENT_NOT_FOUND_ERROR = "Event not found."
+COMMENT_NOT_FOUND_ERROR = "Comment not found."
