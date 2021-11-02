@@ -35,3 +35,10 @@ class AppSettings(BaseAppSettings):
     # storages
     POSTGRES_DSN: str
     REDIS_DSN: str
+
+    # Google authentication
+    CONF_URL: str = "https://accounts.google.com/.well-known/openid-configuration"
+    SECRET_KEY: str
+    GOOGLE_CLIENT_ID: str
+    GOOGLE_CLIENT_SECRET: str
+    TOKEN_EXPIRES: int = 1800
