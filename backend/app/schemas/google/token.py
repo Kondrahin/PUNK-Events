@@ -60,7 +60,7 @@ class OAuth2PasswordBearerCookie(OAuth2):
         return param
 
 
-oauth2_scheme = OAuth2PasswordBearerCookie(token_url="/auth")  # noqa: S106
+oauth2_scheme = OAuth2PasswordBearerCookie(token_url="/api/v1/auth")  # noqa: S106
 
 
 class GoogleTokenData(BaseModel):

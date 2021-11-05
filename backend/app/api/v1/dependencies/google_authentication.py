@@ -2,10 +2,11 @@
 import json
 
 from fastapi import Depends, HTTPException
-from starlette.status import HTTP_403_FORBIDDEN
+from httpx import HTTPStatusError
+from starlette import status
 
-from app.api.api_v1.dependencies.domain_repo import get_user_repo_dependency
-from app.db.users.repo import UserRepo
+from app.api.v1.dependencies.domain_repo import get_user_repo_dependency
+from app.db.crud.users.repo import UserRepo
 from app.schemas.google.token import oauth2_scheme
 from app.schemas.user import UserSchema
 from app.services.api.google_api import GoogleApiAdapter
@@ -27,11 +28,14 @@ async def get_token_data(
     user_repo: UserRepo = get_user_repo_dependency,
 ) -> UserSchema:
     credentials_exception = HTTPException(  # noqa: F841
-        status_code=HTTP_403_FORBIDDEN, detail="Could not validate credentials"
+        status_code=status.HTTP_403_FORBIDDEN, detail="Could not validate credentials"
     )
     token_data_dict = json.loads(token.replace("'", '"'))
-    # TODO Add try except
-    token_data = await api_adapter.get_token_data(token_data_dict["id_token"])
+    try:
+        token_data = await api_adapter.get_token_data(token_data_dict["id_token"])
+    except HTTPStatusError:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+
     return await user_repo.get_or_create_user_by_email(token_data)
 
 

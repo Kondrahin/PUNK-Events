@@ -11,7 +11,9 @@ class DevAppSettings(AppSettings):
     SQL_DEBUG: bool = True
 
     # storages
-    POSTGRES_DSN: str = "postgresql+asyncpg://postgres:postgres@db/punk_events_dev"
+    POSTGRES_DSN: str = (
+        "postgresql+asyncpg://postgres:postgres@localhost/punk_events_dev"
+    )
     REDIS_DSN: str = "redis://localhost/0"
 
     class Config(AppSettings.Config):  # noqa: WPS431

@@ -16,4 +16,5 @@ class GoogleApiAdapter:
         response = await self.client.get(
             self.GET_TOKEN_INFO_SUFFIX, params={"id_token": id_token}
         )
+        response.raise_for_status()
         return GoogleTokenData.from_api(response.json())
