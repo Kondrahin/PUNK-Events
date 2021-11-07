@@ -20,21 +20,21 @@ const MyGoogleLogin = ({authResponse, setAuthResponse}) => {
 
     return (
         <div>
-        <GoogleLogin
-            clientId={process.env.REACT_APP_CLIENT_ID}
-            buttonText="Login"
-            onSuccess={setGoogleToken}
-            onFailure={failureResponseGoogle}
-            cookiePolicy={'single_host_origin'}
-            isSignedIn={true}
-            scope={"openid email profile"}
-        />
-        <GoogleLogout
-            clientId={process.env.REACT_APP_CLIENT_ID}
-            buttonText="Logout"
-            onLogoutSuccess={deleteGoogleToken}
-        >
-        </GoogleLogout>
+            <GoogleLogin
+                clientId={process.env.REACT_APP_CLIENT_ID}
+                buttonText="Login"
+                onSuccess={setGoogleToken}
+                onFailure={failureResponseGoogle}
+                cookiePolicy={'single_host_origin'}
+                isSignedIn={true}
+                scope={"openid email profile"}
+            />
+            <GoogleLogout
+                clientId={process.env.REACT_APP_CLIENT_ID}
+                buttonText="Logout"
+                onLogoutSuccess={deleteGoogleToken}
+            >
+            </GoogleLogout>
         </div>
     );
 };
