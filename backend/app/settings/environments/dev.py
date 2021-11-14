@@ -7,8 +7,8 @@ class DevAppSettings(AppSettings):
     """Application settings with override params for dev environment."""
 
     # base kwargs
-    DEBUG: bool = True
-    SQL_DEBUG: bool = True
+    DEBUG: bool = False
+    SQL_DEBUG: bool = False
 
     # storages
     POSTGRES_DSN: str = (

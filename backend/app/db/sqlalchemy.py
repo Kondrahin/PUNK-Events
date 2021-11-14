@@ -30,12 +30,7 @@ class AsyncDatabaseSession:
 
     def __init__(self) -> None:
         """Initialize."""
-        self._session = None
-        self._engine = None
-
-    def __getattr__(self, name: str) -> Any:
-        """Get session attrs by default."""
-        return getattr(self._session, name)
+        self._engine: Any = None
 
     async def init(self) -> None:
         """Async initialization."""
@@ -44,15 +39,16 @@ class AsyncDatabaseSession:
             return
         self._engine = create_async_engine(make_url_async(POSTGRES_DSN), echo=SQL_DEBUG)
 
-        make_session = sessionmaker(
+        self.make_session = sessionmaker(
             self._engine, expire_on_commit=False, class_=AsyncSession
         )
-        self._session = make_session()
 
     async def close(self) -> None:
-        """Close session."""
-        if self._session is not None:
-            await self._session.close()
+        assert self._engine is not None
+        await self._engine.dispose()
+
+    def get_session(self) -> Any:
+        return self.make_session()
 
 
-session = AsyncDatabaseSession()
+session_fabric = AsyncDatabaseSession()

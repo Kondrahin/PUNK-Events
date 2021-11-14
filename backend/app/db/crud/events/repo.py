@@ -7,7 +7,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.exc import NoResultFound
 
 from app.db.models import Event, User
-from app.db.sqlalchemy import session
+from app.db.sqlalchemy import session_fabric
 from app.schemas.event import CreateUpdateEventSchema, EventSchema
 
 
@@ -24,6 +24,7 @@ class EventRepo:
         )
         event = await Event.get(uuid=event_uuid)
         user = await User.get(uuid=creator)
+        session = session_fabric.get_session()
         async with session.begin():
             event.participants = [user]
         return event_uuid

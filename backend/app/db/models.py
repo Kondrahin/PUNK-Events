@@ -10,7 +10,7 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.future import select
 from sqlalchemy.orm import relationship
 
-from app.db.sqlalchemy import Base, session
+from app.db.sqlalchemy import Base, session_fabric
 
 T = TypeVar("T")  # noqa: WPS111
 
@@ -23,6 +23,7 @@ class CRUDMixin(Generic[T]):
     @classmethod
     async def create(cls, **kwargs: Any) -> None:
         """Create object."""
+        session = session_fabric.get_session()
         query = sa.insert(cls).values(**kwargs)
         async with session.begin():
             await session.execute(query)
@@ -30,6 +31,7 @@ class CRUDMixin(Generic[T]):
     @classmethod
     async def update(cls, key_column: Any, key_value: Any, **kwargs: Any) -> None:
         """Update object by key column."""
+        session = session_fabric.get_session()
         query = (
             sa.update(cls)
             .where(key_column == key_value)
@@ -42,6 +44,7 @@ class CRUDMixin(Generic[T]):
     @classmethod
     async def get(cls, **kwargs: Any) -> T:
         """Get object by kwargs."""
+        session = session_fabric.get_session()
         query = select(cls).filter_by(**kwargs)
         async with session.begin():
             rows = await session.execute(query)
@@ -50,6 +53,7 @@ class CRUDMixin(Generic[T]):
     @classmethod
     async def delete(cls, key_column: Any, key_value: Any) -> None:
         """Delete object by key_column."""
+        session = session_fabric.get_session()
         query = sa.delete(cls).where(key_column == key_value)
         async with session.begin():
             await session.execute(query)
@@ -57,6 +61,7 @@ class CRUDMixin(Generic[T]):
     @classmethod
     async def all(cls) -> List[T]:
         """Get all objects."""
+        session = session_fabric.get_session()
         query = select(cls)
         async with session.begin():
             rows = await session.execute(query)
@@ -123,7 +128,11 @@ class Event(Base, CRUDMixin):
     scope: str = sa.Column(sa.String, nullable=False)
     created_datetime: datetime = sa.Column(sa.DateTime(timezone=True), nullable=False)
     event_datetime: datetime = sa.Column(sa.DateTime(timezone=True), nullable=False)
-    comments = relationship("Comment", lazy="joined")
+    comments = relationship(
+        "Comment",
+        lazy="joined",
+        cascade="all,delete",
+    )
     is_approved: bool = sa.Column(sa.Boolean, default=False)
 
 
