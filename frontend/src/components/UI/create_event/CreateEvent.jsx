@@ -3,6 +3,7 @@ import './CreateEvent.css'
 import DatetimePicker from "../datetimepicker/DatetimePicker";
 
 const CreateEvent = ({create, setVisible}) => {
+
     (function () {
         'use strict'
 
