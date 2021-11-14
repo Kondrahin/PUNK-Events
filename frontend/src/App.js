@@ -6,8 +6,11 @@ import CreateEvent from "./components/UI/create_event/CreateEvent";
 import MyButton from "./components/UI/button/MyButton";
 import MyModal from "./components/UI/modal/MyModal";
 import toast, {Toaster} from 'react-hot-toast';
+import {zoomIn} from 'react-animations';
+import styled, { keyframes } from 'styled-components';
 
 function App() {
+    const ZoomIn = styled.div`animation: 0.5s ${keyframes`${zoomIn}`}`;
 
     const [authResponse, setAuthResponse] = useState()
     const [createEventModal, setCreateEventModal] = useState(false)
@@ -59,7 +62,9 @@ function App() {
             <MyGoogleLogin authResponse={authResponse} setAuthResponse={setAuthResponse}/>
             <MyButton onClick={() => setCreateEventModal(true)}/>
             <MyModal visible={createEventModal} setVisible={setCreateEventModal}>
-                <CreateEvent create={createEvent} setVisible={setCreateEventModal}/>
+                <ZoomIn>
+                    <CreateEvent create={createEvent} setVisible={setCreateEventModal}/>
+                </ZoomIn>
             </MyModal>
             <Toaster/>
         </div>
