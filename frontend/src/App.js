@@ -5,6 +5,7 @@ import MyGoogleLogin from "./API/GoogleLogin";
 import CreateEvent from "./components/UI/create_event/CreateEvent";
 import MyButton from "./components/UI/button/MyButton";
 import MyModal from "./components/UI/modal/MyModal";
+import toast, {Toaster} from 'react-hot-toast';
 
 function App() {
 
@@ -49,6 +50,8 @@ function App() {
             }
             console.log(error.config);
         }
+        setCreateEventModal(false)
+        toast('Мероприятие успешно создано!', {icon: '✅'});
     }
 
     return (
@@ -58,6 +61,7 @@ function App() {
             <MyModal visible={createEventModal} setVisible={setCreateEventModal}>
                 <CreateEvent create={createEvent} setVisible={setCreateEventModal}/>
             </MyModal>
+            <Toaster/>
         </div>
     );
 }
