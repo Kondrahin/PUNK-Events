@@ -54,15 +54,15 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
+            cd backend
             python -m venv .venv
             source .venv/bin/activate
             pip install poetry==1.1.6
             poetry config virtualenvs.in-project true
-            cd backend
             poetry install
 
       - name: Run tests
         run: |
+          cd backend
           source .venv/bin/activate
-          cd backend 
           ./scripts/test
