@@ -38,11 +38,7 @@ def upgrade():
         sa.Column("scope", sa.String(), nullable=False),
         sa.Column("created_datetime", sa.DateTime(timezone=True), nullable=False),
         sa.Column("event_datetime", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("is_approved", sa.Boolean(), nullable=True),
-        sa.ForeignKeyConstraint(
-            ["creator"],
-            ["user.uuid"],
-        ),
+        sa.ForeignKeyConstraint(["creator"], ["user.uuid"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("uuid"),
     )
@@ -64,14 +60,8 @@ def upgrade():
         sa.Column("user_uuid", postgresql.UUID(as_uuid=True), nullable=True),
         sa.Column("event_uuid", postgresql.UUID(as_uuid=True), nullable=True),
         sa.Column("created_datetime", sa.DateTime(timezone=True), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["event_uuid"],
-            ["event.uuid"],
-        ),
-        sa.ForeignKeyConstraint(
-            ["user_uuid"],
-            ["user.uuid"],
-        ),
+        sa.ForeignKeyConstraint(["event_uuid"], ["event.uuid"], ondelete="CASCADE"),
+        sa.ForeignKeyConstraint(["user_uuid"], ["user.uuid"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("uuid"),
     )
