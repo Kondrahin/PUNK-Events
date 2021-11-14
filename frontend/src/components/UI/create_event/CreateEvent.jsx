@@ -34,6 +34,7 @@ const CreateEvent = ({create, setVisible}) => {
         const newUserEvent = {...userEvent, id: Date.now()}
         console.log(newUserEvent)
         create(newUserEvent)
+
     }
 
     return (
