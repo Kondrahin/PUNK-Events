@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './CreateEvent.css'
 import DatetimePicker from "../datetimepicker/DatetimePicker";
 
-const CreateEvent = ({create, setVisible}) => {
+const CreateEventForm = ({create, setVisible}) => {
 
     (function () {
         'use strict'
@@ -131,4 +131,4 @@ const CreateEvent = ({create, setVisible}) => {
     )
 }
 
-export default CreateEvent;
+export default CreateEventForm;
