@@ -2,7 +2,7 @@ import React from "react";
 import GoogleLogin, {GoogleLogout} from 'react-google-login';
 
 
-const MyGoogleLogin = ({authResponse, setAuthResponse}) => {
+const MyGoogleLogin = ({setAuthResponse}) => {
 
     const setGoogleToken = (response) => {
         setAuthResponse(response.getAuthResponse())
