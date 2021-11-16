@@ -65,7 +65,7 @@ class CRUDMixin(Generic[T]):
         query = select(cls)
         async with session.begin():
             rows = await session.execute(query)
-        return rows.scalars().all()
+        return rows.scalars().unique().all()
 
 
 association_table = sa.Table(
@@ -133,7 +133,6 @@ class Event(Base, CRUDMixin):
         lazy="joined",
         cascade="all,delete",
     )
-    is_approved: bool = sa.Column(sa.Boolean, default=False)
 
 
 class Comment(Base, CRUDMixin):
