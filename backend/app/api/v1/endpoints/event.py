@@ -1,5 +1,5 @@
 """Event Endpoints."""
-from typing import Any
+from typing import Any, Optional
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException
@@ -32,10 +32,13 @@ async def create_event(
 @router.get("/")
 async def get_event(
     request: Request,
-    event_uuid: UUID,
+    event_uuid: Optional[UUID] = None,
     event_repo: EventRepo = get_event_repo_dependency,
-    user: UserSchema = get_token_data_dependency,
 ) -> Any:
+    if not event_uuid:
+        events = await event_repo.get_all_event()
+        return {"events": events}
+
     event = await event_repo.get_event(event_uuid)
     if not event:
         raise HTTPException(

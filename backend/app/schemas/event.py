@@ -27,3 +27,6 @@ class EventSchema(BaseModel):
     event_datetime: datetime
     participants: List[UserSchema]
     comments: List[CommentSchema]
+
+    class Config:
+        orm_mode = True
