@@ -1,12 +1,16 @@
 import React from "react";
 import GoogleLogin, {GoogleLogout} from 'react-google-login';
+import {deleteCookie, getCookie, setCookie} from "../services/cookie";
 
-
-const MyGoogleLogin = ({setAuthResponse}) => {
+const MyGoogleLogin = ({authResponse, setAuthResponse}) => {
 
     const setGoogleToken = (response) => {
-        setAuthResponse(response.getAuthResponse())
         console.log(response.getAuthResponse())
+        let token = response.getAuthResponse()
+        setCookie("token", token)
+        token = getCookie("token")
+        // for (i in token{}
+        console.log(JSON.stringify(getCookie("token")))
     }
 
     const failureResponseGoogle = (response) => {
@@ -14,7 +18,7 @@ const MyGoogleLogin = ({setAuthResponse}) => {
     }
 
     const deleteGoogleToken = (response) => {
-        setAuthResponse()
+        deleteCookie("token")
         console.log("Successful logout!")
     }
 

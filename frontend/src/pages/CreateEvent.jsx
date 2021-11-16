@@ -7,19 +7,20 @@ import toast, {Toaster} from 'react-hot-toast';
 import {zoomIn} from 'react-animations';
 import styled, {keyframes} from 'styled-components';
 import CreateEventForm from "../components/UI/create_event/CreateEventForm";
+import {getCookie} from "../services/cookie";
 
-
-const CreateEvent = ({authResponse}) => {
+const CreateEvent = () => {
 
     const ZoomIn = styled.div`animation: 0.5s ${keyframes`${zoomIn}`}`;
 
     const [createEventModal, setCreateEventModal] = useState(false)
 
     function getHeaders() {
-        if (authResponse) {
+        let token = JSON.parse(getCookie("token"))
+        if (token) {
             return {
                 headers: {
-                    Authorization: "Bearer " + JSON.stringify(authResponse)
+                    Authorization: "Bearer " + JSON.stringify(token)
                 }
             }
         }
@@ -45,7 +46,6 @@ const CreateEvent = ({authResponse}) => {
             if (error.response) {
                 if (error.response.status === 403) {
                     toast('Войдите в свой аккаунт!', {icon: '❌'});
-                    alert("You need login first.")
                 }
             } else if (error.request) {
                 toast('Попробуйте позже...', {icon: '😥'});

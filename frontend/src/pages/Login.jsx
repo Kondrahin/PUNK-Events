@@ -1,11 +1,11 @@
 import React from 'react';
 import MyGoogleLogin from "../API/GoogleLogin";
 
-const Login = ({setAuthResponse}) => {
+const Login = ({authResponse, setAuthResponse}) => {
 
     return (
         <div>
-            <MyGoogleLogin setAuthResponse={setAuthResponse}/>
+            <MyGoogleLogin authResponse={authResponse} setAuthResponse={setAuthResponse}/>
         </div>
     );
 };
