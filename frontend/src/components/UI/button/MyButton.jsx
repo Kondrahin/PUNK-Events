@@ -3,7 +3,7 @@ import './MyButton.css'
 
 const MyButton = ({children, ...props}) => {
     return (
-        <button {...props} className="my-button" role="button"><span className="text">Создать мероприятие</span>
+        <button {...props} className="my-button" role="button"><span className="text">{children}</span>
         </button>
     );
 };

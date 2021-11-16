@@ -1,25 +1,30 @@
-// import './App.css';
 import React, {useState} from 'react';
 import axios from "axios";
 import MyButton from "../components/UI/button/MyButton";
 import MyModal from "../components/UI/modal/MyModal";
 import toast, {Toaster} from 'react-hot-toast';
 import {zoomIn} from 'react-animations';
-import styled, {keyframes} from 'styled-components';
 import CreateEventForm from "../components/UI/create_event/CreateEventForm";
+import {getCookie} from "../services/cookie";
+import Radium, {StyleRoot} from 'radium';
 
+const CreateEvent = () => {
 
-const CreateEvent = ({authResponse}) => {
-
-    const ZoomIn = styled.div`animation: 0.5s ${keyframes`${zoomIn}`}`;
+    const styles = {
+        zoomIn: {
+            animation: 'x 0.5s',
+            animationName: Radium.keyframes(zoomIn, 'bounce')
+        }
+    }
 
     const [createEventModal, setCreateEventModal] = useState(false)
 
     function getHeaders() {
-        if (authResponse) {
+        let token = JSON.parse(getCookie("token"))
+        if (token) {
             return {
                 headers: {
-                    Authorization: "Bearer " + JSON.stringify(authResponse)
+                    Authorization: "Bearer " + JSON.stringify(token)
                 }
             }
         }
@@ -39,34 +44,40 @@ const CreateEvent = ({authResponse}) => {
         }
 
         try {
-            const response = await axios.post(process.env.REACT_APP_BACKEND_API + "/events/", newEvent, headers)
-            return response.data
+            var response = await axios.post(process.env.REACT_APP_BACKEND_API + "/events/", newEvent, headers)
         } catch (error) {
             if (error.response) {
                 if (error.response.status === 403) {
-                    toast('Войдите в свой аккаунт!', {icon: '❌'});
-                    alert("You need login first.")
+                    toast('Войдите в свой аккаунт!', {icon: '🔒'});
+                    return
                 }
             } else if (error.request) {
-                toast('Попробуйте позже...', {icon: '😥'});
-                alert("Please try again later")
+                toast('Что-то пошло не так, попробуйте позже...', {icon: '😥'});
+                return
             } else {
-                console.log('Error', error.message);
+                toast('Что-то пошло не так, попробуйте позже...', {icon: '😥'});
+
+                return
             }
-            console.log(error.config);
+            toast('Что-то пошло не так, попробуйте позже...', {icon: '😥'});
+
+            return
         }
         setCreateEventModal(false)
         toast('Мероприятие успешно создано!', {icon: '✅'});
+        return response.data
     }
 
 
     return (
         <div className="CreateEvent">
-            <MyButton onClick={() => setCreateEventModal(true)}/>
+            <MyButton onClick={() => setCreateEventModal(true)}>Создать мероприятие</MyButton>
             <MyModal visible={createEventModal} setVisible={setCreateEventModal}>
-                <ZoomIn>
-                    <CreateEventForm create={createEvent} setVisible={setCreateEventModal}/>
-                </ZoomIn>
+                <StyleRoot>
+                    <div className="CreateForm" style={styles.zoomIn}>
+                        <CreateEventForm create={createEvent} setVisible={setCreateEventModal}/>
+                    </div>
+                </StyleRoot>
             </MyModal>
             <Toaster/>
         </div>
