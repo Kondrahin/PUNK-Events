@@ -5,7 +5,6 @@ import DatetimePicker from "../datetimepicker/DatetimePicker";
 const CreateEventForm = ({create, setVisible}) => {
 
     (function () {
-        'use strict'
 
         var forms = document.querySelectorAll('.needs-validation')
 
@@ -33,9 +32,7 @@ const CreateEventForm = ({create, setVisible}) => {
     const postEvent = (event) => {
         event.preventDefault()
         const newUserEvent = {...userEvent, id: Date.now()}
-        console.log(newUserEvent)
-        create(newUserEvent)
-
+        create(newUserEvent).then()
     }
 
     return (
@@ -73,7 +70,7 @@ const CreateEventForm = ({create, setVisible}) => {
                                                        title: event.target.value
                                                    })}/>
                                             <div className="invalid-feedback">
-                                                Укажите название.
+                                                Укажите название
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +82,7 @@ const CreateEventForm = ({create, setVisible}) => {
                                                    description: event.target.value
                                                })} required/>
                                         <div className="invalid-feedback">
-                                            Укажите описание.
+                                            Укажите описание
                                         </div>
                                     </div>
                                     <div className="app-form-group">
@@ -96,7 +93,7 @@ const CreateEventForm = ({create, setVisible}) => {
                                                    scope: event.target.value
                                                })}/>
                                         <div className="invalid-feedback">
-                                            Укажите сферу.
+                                            Укажите сферу
                                         </div>
                                     </div>
                                     <div className="app-form-group">
@@ -107,7 +104,7 @@ const CreateEventForm = ({create, setVisible}) => {
                                                    location: event.target.value
                                                })} required/>
                                         <div className="invalid-feedback">
-                                            Укажите место проведения.
+                                            Укажите место проведения
                                         </div>
                                     </div>
                                     <div className="app-form-group message">

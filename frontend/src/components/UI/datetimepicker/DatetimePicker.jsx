@@ -9,7 +9,6 @@ const DatetimePicker = ({setTime, currentEvent}) => {
     function setEventDate(date) {
         let dateJSON = date.toJSON()
         setDate(date)
-        console.log(startDate)
         setTime({...currentEvent, event_datetime: dateJSON})
     }
 
