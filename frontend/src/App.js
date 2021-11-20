@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import CreateEvent from "./pages/CreateEvent";
 import Login from "./pages/Login";
 import EventTimeline from "./pages/EventTimeline";
+import NotFound from "./pages/NotFound";
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/create" element={<CreateEvent/>}/>
                     <Route path="/events" element={<EventTimeline/>}/>
-                    <Route path="*" element={<Login/>}/>
+                    <Route path="/events/*" element={<CreateEvent/>}/>
+                    <Route path="*" element={<NotFound/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
