@@ -5,8 +5,8 @@ import MyModal from "../components/UI/modal/MyModal";
 import toast, {Toaster} from 'react-hot-toast';
 import {zoomIn} from 'react-animations';
 import CreateEventForm from "../components/UI/create_event/CreateEventForm";
-import {getCookie} from "../services/cookie";
 import Radium, {StyleRoot} from 'radium';
+import {getHeaders} from "../services/api_utils";
 
 const CreateEvent = () => {
 
@@ -18,19 +18,6 @@ const CreateEvent = () => {
     }
 
     const [createEventModal, setCreateEventModal] = useState(false)
-
-    function getHeaders() {
-        let token = JSON.parse(getCookie("token"))
-        if (token) {
-            return {
-                headers: {
-                    Authorization: "Bearer " + JSON.stringify(token)
-                }
-            }
-        }
-        return {}
-    }
-
 
     async function createEvent(event) {
 
