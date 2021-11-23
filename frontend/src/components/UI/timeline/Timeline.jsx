@@ -2,8 +2,15 @@ import {VerticalTimeline, VerticalTimelineElement,} from 'react-vertical-timelin
 import 'react-vertical-timeline-component/style.min.css';
 import {FcCalendar} from "react-icons/all";
 import MyButton from "../button/MyButton";
+import {useNavigate} from 'react-router-dom';
+
 
 const Timeline = ({usersEvents}) => {
+    const navigate = useNavigate();
+
+    const redirect = (uuid) => {
+        navigate('/events/' + uuid)
+    }
 
     function getEvents() {
         let eventsList = []
@@ -27,7 +34,7 @@ const Timeline = ({usersEvents}) => {
                     <p>
                         {usersEvents[key].scope}
                     </p>
-                    <MyButton>Открыть</MyButton>
+                    <MyButton onClick={() => redirect(usersEvents[key].uuid)}>Открыть</MyButton>
                 </VerticalTimelineElement>
             );
         });

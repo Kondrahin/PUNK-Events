@@ -1,0 +1,16 @@
+.description {
+    position: relative;
+    top: 160px;
+    left: 30%;
+    width: 500px;
+    text-align: left;
+}
+
+.comments {
+    position: relative;
+    overflow: auto;
+    width: 700px;
+    top: 400px;
+    left: 10%;
+
+}
