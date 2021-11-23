@@ -45,7 +45,7 @@ async def get_event(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=strings.EVENT_NOT_FOUND_ERROR,
         )
-    return {"event": event}
+    return {"events": event}
 
 
 @router.put("/")
