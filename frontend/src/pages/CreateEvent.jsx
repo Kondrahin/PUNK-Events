@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import axios from "axios";
 import MyButton from "../components/UI/button/MyButton";
 import MyModal from "../components/UI/modal/MyModal";
-import toast, {Toaster} from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import {zoomIn} from 'react-animations';
-import CreateEventForm from "../components/UI/create_event/CreateEventForm";
+import CreateEventForm from "../components/UI/CreateEvent/CreateEventForm";
 import Radium, {StyleRoot} from 'radium';
 import {getHeaders} from "../services/api_utils";
 
@@ -43,11 +43,9 @@ const CreateEvent = () => {
                 return
             } else {
                 toast('Что-то пошло не так, попробуйте позже...', {icon: '😥'});
-
                 return
             }
             toast('Что-то пошло не так, попробуйте позже...', {icon: '😥'});
-
             return
         }
         setCreateEventModal(false)
@@ -66,7 +64,6 @@ const CreateEvent = () => {
                     </div>
                 </StyleRoot>
             </MyModal>
-            <Toaster/>
         </div>
     );
 }
