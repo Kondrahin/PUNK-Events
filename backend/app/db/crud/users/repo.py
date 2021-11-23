@@ -19,3 +19,7 @@ class UserRepo:
             user = await User.get(email=token.email)
 
         return UserSchema.from_orm(user)
+
+    async def get_user_by_uuid(self, user_uuid: uuid.UUID) -> UserSchema:
+        user = await User.get(uuid=user_uuid)
+        return UserSchema.from_orm(user)
