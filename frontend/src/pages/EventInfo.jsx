@@ -8,8 +8,10 @@ import {getHeaders} from "../services/api_utils";
 
 const getEvent = async ({event_uuid}) => {
     let headers = getHeaders()
-    const response = await axios.get(process.env.REACT_APP_BACKEND_API + "/events?event_uuid="+event_uuid, headers)
-    return response.data["events"]
+    let response = await axios.get(process.env.REACT_APP_BACKEND_API + "/events?event_uuid="+event_uuid, headers)
+    let event = response.data["events"]
+    response = await axios.get(process.env.REACT_APP_BACKEND_API + "/user/", headers)
+    return [event, response]
 }
 
 const EventInfo = () => {
@@ -21,7 +23,7 @@ const EventInfo = () => {
     if (data) {
         return (
             <div>
-                <MyEventInfo eventInfo={data}/>
+                <MyEventInfo data={data}/>
             </div>
         );
     }
