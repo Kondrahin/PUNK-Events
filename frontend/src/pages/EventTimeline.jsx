@@ -3,6 +3,7 @@ import Timeline from "../components/UI/timeline/Timeline";
 import axios from "axios";
 import {useAsync} from "react-async"
 import {getHeaders} from "../services/api_utils";
+import {EventsNavigation} from "../components/UI/Navigation/Navigation";
 
 const getEvents = async () => {
     let headers = getHeaders()
@@ -17,9 +18,11 @@ const EventTimeline = () => {
     if (isPending) return "Loading..."
     if (data) {
         return (
-            <div className="EventTimeline" style={{backgroundColor:"black"}}>
+            <div className="EventTimeline" style={{backgroundColor: "black"}}>
+                <EventsNavigation/>
                 <Timeline usersEvents={data}/>
             </div>
+
         );
     }
     return null

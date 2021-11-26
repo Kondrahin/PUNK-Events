@@ -46,7 +46,7 @@ const MyEventInfo = ({data}) => {
     return (
         <div>
             <div className="position-static">
-                <div className="position-absolute top-0 start-50 translate-middle-x">
+                <div className="position-absolute start-50 p-5 translate-middle-x">
                     <h1 className="display-1">{eventInfo["title"]}</h1>
                 </div>
                 <div className="description">
