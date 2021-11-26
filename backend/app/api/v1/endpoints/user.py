@@ -1,5 +1,5 @@
 """User route."""
-from typing import Any
+from typing import Any, Optional
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -18,9 +18,12 @@ config = get_app_settings()
 @router.get("/")
 async def get_user(
     request: Request,
-    user_uuid: UUID,
+    user_uuid: Optional[UUID] = None,
     user_repo: UserRepo = get_user_repo_dependency,
     user: UserSchema = get_token_data_dependency,
 ) -> Any:
+    if not user_uuid:
+        return {"user": user}
+
     user = await user_repo.get_user_by_uuid(user_uuid)
     return {"user": user}
