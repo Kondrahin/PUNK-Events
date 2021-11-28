@@ -1,5 +1,5 @@
 import React from 'react';
-import {getHeaders} from "../../../services/api_utils";
+import {getHeaders, getModeratorsUUIDS} from "../../../services/api_utils";
 import axios from "axios";
 import {useAsync} from "react-async";
 import toast from "react-hot-toast";
@@ -24,12 +24,21 @@ async function deleteComment(comment_uuid) {
 }
 
 const getComments = async (comments) => {
+    let button = null
     let commentsComponentList = []
+    const moderators_uuids = await getModeratorsUUIDS()
 
     for (let key of Object.keys(comments.comments.comments)) {
         let comment = comments.comments.comments[key];
         let created_datetime = new Date(comment.created_datetime)
         let user = await getUser(comment.user_uuid)
+        if (user.uuid === comment.user_uuid || user.uuid in moderators_uuids) {
+            button = <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button className="btn btn-outline-danger" type="button"
+                        onClick={() => deleteComment(comment.uuid)}>Удалить
+                </button>
+            </div>
+        }
         commentsComponentList.push(
             <div className="card p-3" key={comment.uuid}>
                 <div className="d-flex justify-content-between align-items-center">
@@ -46,13 +55,7 @@ const getComments = async (comments) => {
                         </div>
                     </ul>
                 </div>
-                {user.uuid === comment.user_uuid &&
-                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button className="btn btn-outline-danger" type="button"
-                            onClick={() => deleteComment(comment.uuid)}>Удалить
-                    </button>
-                </div>
-                }
+                {button}
             </div>
         )
     }
