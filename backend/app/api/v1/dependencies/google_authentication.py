@@ -5,7 +5,7 @@ from fastapi import Depends, HTTPException
 from httpx import HTTPStatusError
 from starlette import status
 
-from app.api.v1.dependencies.domain_repo import get_user_repo_dependency
+from app.api.v1.dependencies.repo import get_user_repo_dependency
 from app.db.crud.users.repo import UserRepo
 from app.schemas.google.token import oauth2_scheme
 from app.schemas.user import UserSchema

@@ -6,10 +6,12 @@ from fastapi import APIRouter, Body, HTTPException
 from starlette import status
 from starlette.requests import Request
 
-from app.api.v1.dependencies.domain_repo import get_comment_repo_dependency
+from app.api.v1.dependencies.entity import get_comment_dependency
 from app.api.v1.dependencies.google_authentication import get_token_data_dependency
+from app.api.v1.dependencies.repo import get_comment_repo_dependency
 from app.db.crud.comments.repo import CommentRepo
 from app.resources import strings
+from app.schemas.comment import CommentSchema
 from app.schemas.user import UserSchema
 
 router = APIRouter()
@@ -54,8 +56,9 @@ async def get_comment(
 async def delete_comment(
     request: Request,
     comment_uuid: UUID,
-    comment_repo: CommentRepo = get_comment_repo_dependency,
+    comment: CommentSchema = get_comment_dependency,
     user: UserSchema = get_token_data_dependency,
+    comment_repo: CommentRepo = get_comment_repo_dependency,
 ) -> Any:
     await comment_repo.delete_comment(comment_uuid)
-    return {"comment_uuid": comment_uuid}
+    return {"result": True}

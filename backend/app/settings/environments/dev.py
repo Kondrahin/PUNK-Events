@@ -16,5 +16,7 @@ class DevAppSettings(AppSettings):
     )
     REDIS_DSN: str = "redis://localhost/0"
 
+    ADMIN_EMAIL: str = "st076704@student.spbu.ru"
+
     class Config(AppSettings.Config):  # noqa: WPS431
         env_file = ".env"
