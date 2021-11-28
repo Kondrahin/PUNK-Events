@@ -1,6 +1,7 @@
 import React from 'react';
 import GoogleLogin, {GoogleLogout} from 'react-google-login';
 import {deleteCookie, setCookie} from "../services/cookie";
+import {LoginNavigation} from "../components/UI/Navigation/Navigation";
 
 const Login = () => {
     const setGoogleToken = (response) => {
@@ -19,6 +20,7 @@ const Login = () => {
 
     return (
         <div>
+            <LoginNavigation/>
             <GoogleLogin
                 clientId={process.env.REACT_APP_CLIENT_ID}
                 buttonText="Login"

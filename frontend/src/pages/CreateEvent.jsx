@@ -7,6 +7,7 @@ import {zoomIn} from 'react-animations';
 import CreateEventForm from "../components/UI/CreateEvent/CreateEventForm";
 import Radium, {StyleRoot} from 'radium';
 import {getHeaders} from "../services/api_utils";
+import {CreateEventsNavigation} from "../components/UI/Navigation/Navigation";
 
 const CreateEvent = () => {
 
@@ -56,6 +57,7 @@ const CreateEvent = () => {
 
     return (
         <div className="CreateEvent">
+            <CreateEventsNavigation/>
             <MyButton onClick={() => setCreateEventModal(true)}>Создать мероприятие</MyButton>
             <MyModal visible={createEventModal} setVisible={setCreateEventModal}>
                 <StyleRoot>
