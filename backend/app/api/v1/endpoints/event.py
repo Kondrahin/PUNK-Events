@@ -6,11 +6,12 @@ from fastapi import APIRouter, HTTPException
 from starlette import status
 from starlette.requests import Request
 
-from app.api.v1.dependencies.domain_repo import get_event_repo_dependency
+from app.api.v1.dependencies.entity import get_event_dependency
 from app.api.v1.dependencies.google_authentication import get_token_data_dependency
+from app.api.v1.dependencies.repo import get_event_repo_dependency
 from app.db.crud.events.repo import EventRepo
 from app.resources import strings
-from app.schemas.event import CreateUpdateEventSchema
+from app.schemas.event import CreateUpdateEventSchema, EventSchema
 from app.schemas.user import UserSchema
 from app.settings.config import get_app_settings
 
@@ -34,6 +35,7 @@ async def get_event(
     request: Request,
     event_uuid: Optional[UUID] = None,
     event_repo: EventRepo = get_event_repo_dependency,
+    user: UserSchema = get_token_data_dependency,
 ) -> Any:
     if not event_uuid:
         events = await event_repo.get_all_event()
@@ -54,7 +56,7 @@ async def update_event(
     event_uuid: UUID,
     event_data: CreateUpdateEventSchema,
     event_repo: EventRepo = get_event_repo_dependency,
-    user: UserSchema = get_token_data_dependency,
+    event: EventSchema = get_event_dependency,
 ) -> Any:
     await event_repo.update_event(event_uuid, event_data)
     return {"event_uuid": event_uuid}
@@ -65,7 +67,7 @@ async def delete_event(
     request: Request,
     event_uuid: UUID,
     event_repo: EventRepo = get_event_repo_dependency,
-    user: UserSchema = get_token_data_dependency,
+    event: EventSchema = get_event_dependency,
 ) -> Any:
     await event_repo.delete_event(event_uuid)
     return {"result": True}

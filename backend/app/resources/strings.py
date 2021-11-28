@@ -38,3 +38,4 @@ lookup = TemplateFormatterLookup(
 
 EVENT_NOT_FOUND_ERROR = "Event not found."
 COMMENT_NOT_FOUND_ERROR = "Comment not found."
+ACCESS_DENIED_ERROR = "You don't have rights for this."

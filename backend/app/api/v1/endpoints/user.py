@@ -5,8 +5,8 @@ from uuid import UUID
 from fastapi import APIRouter
 from starlette.requests import Request
 
-from app.api.v1.dependencies.domain_repo import get_user_repo_dependency
 from app.api.v1.dependencies.google_authentication import get_token_data_dependency
+from app.api.v1.dependencies.repo import get_user_repo_dependency
 from app.db.crud.users.repo import UserRepo
 from app.schemas.user import UserSchema
 from app.settings.config import get_app_settings

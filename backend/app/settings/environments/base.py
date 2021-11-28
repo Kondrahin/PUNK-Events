@@ -36,6 +36,8 @@ class AppSettings(BaseAppSettings):
     POSTGRES_DSN: str
     REDIS_DSN: str
 
+    ADMIN_EMAIL: str
+
     # Google authentication
     CONF_URL: str = "https://accounts.google.com/.well-known/openid-configuration"
     SECRET_KEY: str

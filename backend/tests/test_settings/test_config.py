@@ -13,6 +13,7 @@ def test_credentials_validation():
         SECRET_KEY="secret",
         GOOGLE_CLIENT_ID="client_id",
         GOOGLE_CLIENT_SECRET="client_secret",
+        ADMIN_EMAIL="example@email.com",
     )
     with pytest.raises(ValidationError):
         AppSettings(
