@@ -1,19 +1,27 @@
 import React from 'react';
+import './Navigation.sass'
 
 export const LoginNavigation = () => {
     return (
         <div>
-            <ul className="nav justify-content-end">
-                <li className="nav-item">
-                    <a className="nav-link disabled" aria-current="page" href="login" aria-disabled="true">Вход</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="create">Создать мероприятие</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="events">Активные мероприятия</a>
-                </li>
-            </ul>
+            <input type="checkbox" id="menu" name="menu" className="menu-checkbox"/>
+            <div className="menu">
+                <label className="menu-toggle" htmlFor="menu"><span>Toggle</span></label>
+                <ul>
+                    <li>
+                        <a href="#">Вход</a>
+                    </li>
+                    <li>
+                        <a href="create">Создать мероприятие</a>
+                    </li>
+                    <li>
+                        <a href="events">Мои мероприятия</a>
+                    </li>
+                    <li>
+                        <a href="events">Активные мероприятия</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     );
 };
@@ -21,18 +29,24 @@ export const LoginNavigation = () => {
 export const EventsNavigation = () => {
     return (
         <div>
-            <ul className="nav justify-content-end">
-                <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="login">Вход</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="../create">Создать мероприятие</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link disabled" aria-current="page" href="events" aria-disabled="true">Активные
-                        мероприятия</a>
-                </li>
-            </ul>
+            <input type="checkbox" id="menu" name="menu" className="menu-checkbox"/>
+            <div className="menu">
+                <label className="menu-toggle" htmlFor="menu"><span>Toggle</span></label>
+                <ul>
+                    <li>
+                        <a href="login">Вход</a>
+                    </li>
+                    <li>
+                        <a href="create">Создать мероприятие</a>
+                    </li>
+                    <li>
+                        <a href="#">Мои мероприятия</a>
+                    </li>
+                    <li>
+                        <a href="events">Активные мероприятия</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     );
 };
@@ -41,17 +55,24 @@ export const EventsNavigation = () => {
 export const CreateEventsNavigation = () => {
     return (
         <div>
-            <ul className="nav justify-content-end">
-                <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="login">Вход</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link disabled" href="create" aria-disabled="true">Создать мероприятие</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="events">Активные мероприятия</a>
-                </li>
-            </ul>
+            <input type="checkbox" id="menu" name="menu" className="menu-checkbox"/>
+            <div className="menu">
+                <label className="menu-toggle" htmlFor="menu"><span>Toggle</span></label>
+                <ul>
+                    <li>
+                        <a href="login">Вход</a>
+                    </li>
+                    <li>
+                        <a href="#">Создать мероприятие</a>
+                    </li>
+                    <li>
+                        <a href="events">Мои мероприятия</a>
+                    </li>
+                    <li>
+                        <a href="events">Активные мероприятия</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     );
 };
@@ -60,17 +81,24 @@ export const CreateEventsNavigation = () => {
 export const DefaultNavigation = () => {
     return (
         <div>
-            <ul className="nav justify-content-end">
-                <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="../login">Вход</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="../create">Создать мероприятие</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="../events">Активные мероприятия</a>
-                </li>
-            </ul>
+            <input type="checkbox" id="menu" name="menu" className="menu-checkbox"/>
+            <div className="menu">
+                <label className="menu-toggle" htmlFor="menu"><span>Toggle</span></label>
+                <ul>
+                    <li>
+                        <a href="../login">Вход</a>
+                    </li>
+                    <li>
+                        <a href="../create">Создать мероприятие</a>
+                    </li>
+                    <li>
+                        <a href="../events">Мои мероприятия</a>
+                    </li>
+                    <li>
+                        <a href="events">Активные мероприятия</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     );
 };
