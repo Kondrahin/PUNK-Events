@@ -59,10 +59,10 @@ class CRUDMixin(Generic[T]):
             await session.execute(query)
 
     @classmethod
-    async def all(cls) -> List[T]:
+    async def all(cls, **kwargs: Any) -> List[T]:
         """Get all objects."""
         session = session_fabric.get_session()
-        query = select(cls)
+        query = select(cls).filter_by(**kwargs)
         async with session.begin():
             rows = await session.execute(query)
         return rows.scalars().unique().all()

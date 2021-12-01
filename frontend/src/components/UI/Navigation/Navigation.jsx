@@ -15,10 +15,35 @@ export const LoginNavigation = () => {
                         <a href="create">Создать мероприятие</a>
                     </li>
                     <li>
-                        <a href="events">Мои мероприятия</a>
+                        <a href="events/own">Мои мероприятия</a>
                     </li>
                     <li>
                         <a href="events">Активные мероприятия</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    );
+};
+
+export const UserEventsNavigation = () => {
+    return (
+        <div>
+            <input type="checkbox" id="menu" name="menu" className="menu-checkbox"/>
+            <div className="menu">
+                <label className="menu-toggle" htmlFor="menu"><span>Toggle</span></label>
+                <ul>
+                    <li>
+                        <a href="../login">Вход</a>
+                    </li>
+                    <li>
+                        <a href="../create">Создать мероприятие</a>
+                    </li>
+                    <li>
+                        <a href="#">Мои мероприятия</a>
+                    </li>
+                    <li>
+                        <a href="../events">Активные мероприятия</a>
                     </li>
                 </ul>
             </div>
@@ -40,10 +65,10 @@ export const EventsNavigation = () => {
                         <a href="create">Создать мероприятие</a>
                     </li>
                     <li>
-                        <a href="#">Мои мероприятия</a>
+                        <a href="../events/own">Мои мероприятия</a>
                     </li>
                     <li>
-                        <a href="events">Активные мероприятия</a>
+                        <a href="#">Активные мероприятия</a>
                     </li>
                 </ul>
             </div>
@@ -66,7 +91,7 @@ export const CreateEventsNavigation = () => {
                         <a href="#">Создать мероприятие</a>
                     </li>
                     <li>
-                        <a href="events">Мои мероприятия</a>
+                        <a href="events/own">Мои мероприятия</a>
                     </li>
                     <li>
                         <a href="events">Активные мероприятия</a>
@@ -92,10 +117,10 @@ export const DefaultNavigation = () => {
                         <a href="../create">Создать мероприятие</a>
                     </li>
                     <li>
-                        <a href="../events">Мои мероприятия</a>
+                        <a href="../events/own">Мои мероприятия</a>
                     </li>
                     <li>
-                        <a href="events">Активные мероприятия</a>
+                        <a href="../events">Активные мероприятия</a>
                     </li>
                 </ul>
             </div>

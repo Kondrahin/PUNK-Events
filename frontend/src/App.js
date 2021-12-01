@@ -7,6 +7,7 @@ import EventTimeline from "./pages/EventTimeline";
 import NotFound from "./pages/NotFound";
 import EventInfo from "./pages/EventInfo";
 import {Toaster} from "react-hot-toast";
+import UserEvents from "./pages/UserEvents";
 
 
 function App() {
@@ -18,11 +19,12 @@ function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/create" element={<CreateEvent/>}/>
                     <Route path="/events" element={<EventTimeline/>}/>
+                    <Route path="/events/own" element={<UserEvents/>}/>
                     <Route path="/events/:event_uuid" element={<EventInfo/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
             </BrowserRouter>
-            <Toaster />
+            <Toaster/>
         </div>
     );
 }
