@@ -34,11 +34,22 @@ async def create_event(
 async def get_event(
     request: Request,
     event_uuid: Optional[UUID] = None,
+    own_events: bool = False,
     event_repo: EventRepo = get_event_repo_dependency,
     user: UserSchema = get_token_data_dependency,
 ) -> Any:
     if not event_uuid:
-        events = await event_repo.get_all_event()
+        if own_events:
+            events = await event_repo.get_user_event(user.uuid)
+        else:
+            events = await event_repo.get_all_event()
+
+        if not events:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=strings.EVENT_NOT_FOUND_ERROR,
+            )
+
         return {"events": events}
 
     event = await event_repo.get_event(event_uuid)

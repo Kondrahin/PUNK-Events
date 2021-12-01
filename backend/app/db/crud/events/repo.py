@@ -65,3 +65,12 @@ class EventRepo:
 
         events = [EventSchema.from_orm(event) for event in events]
         return sorted(events, key=lambda event: event.event_datetime, reverse=True)
+
+    async def get_user_event(self, user_uuid: UUID) -> Optional[List[EventSchema]]:
+        try:
+            events = await Event.all(creator=user_uuid)
+        except NoResultFound:
+            return None
+
+        events = [EventSchema.from_orm(event) for event in events]
+        return sorted(events, key=lambda event: event.event_datetime, reverse=True)
