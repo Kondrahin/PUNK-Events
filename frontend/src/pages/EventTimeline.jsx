@@ -18,11 +18,12 @@ const EventTimeline = () => {
     if (isPending) return "Loading..."
     if (data) {
         return (
-            <div className="EventTimeline" style={{backgroundColor: "black"}}>
+            <div>
                 <EventsNavigation/>
-                <Timeline usersEvents={data}/>
+                <div className="EventTimeline" style={{backgroundColor: "lightgray"}}>
+                    <Timeline usersEvents={data}/>
+                </div>
             </div>
-
         );
     }
     return null
