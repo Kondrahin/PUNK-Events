@@ -25,7 +25,7 @@ const EventInfo = () => {
         return (
             <div>
                 <DefaultNavigation/>
-                <MyEventInfo data={data}/>
+                <MyEventInfo eventData={data}/>
             </div>
         );
     }
