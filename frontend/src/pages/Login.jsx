@@ -15,7 +15,6 @@ const Login = () => {
 
     const deleteGoogleToken = (response) => {
         deleteCookie("token")
-        console.log("Successful logout!")
     }
 
     return (

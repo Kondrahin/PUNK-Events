@@ -67,9 +67,6 @@ const Comment = (comments) => {
 
     const {data, error, isPending} = useAsync({promiseFn: getComments, comments: comments})
 
-    if (error) {
-        console.log(error)
-    }
     if (isPending) return "Loading..."
     if (data) {
         return (
