@@ -31,6 +31,15 @@ const UserEvents = () => {
             </div>
         );
     }
+    return (
+        <div>
+            <UserEventsNavigation/>
+            <div className="position-absolute top-50 start-50 translate-middle">
+                <h1>Мероприятий не найдено!</h1>
+                <h2>Перейдите на страницу создания мероприятий и создайте мероприятие</h2>
+            </div>
+        </div>
+    )
 };
 
 export default UserEvents;
