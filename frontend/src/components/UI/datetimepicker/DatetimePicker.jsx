@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const DatetimePicker = ({setTime, currentEvent}) => {
-    const [startDate, setDate] = useState(new Date());
+    const [startDate, setDate] = useState(new Date(currentEvent.event_datetime) || new Date());
 
     function setEventDate(date) {
         let dateJSON = date.toJSON()
@@ -17,9 +17,8 @@ const DatetimePicker = ({setTime, currentEvent}) => {
             selected={startDate}
             onChange={(date) => setEventDate(date)}
             timeInputLabel="Time:"
-            dateFormat="MM/dd/yyyy h:mm aa"
+            dateFormat="MM/dd/yyyy HH:mm"
             showTimeInput
-        />
-    );
+        />);
 };
 export default DatetimePicker

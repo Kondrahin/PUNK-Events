@@ -1,9 +1,10 @@
 .description {
     position: relative;
     top: 160px;
-    left: 30%;
+    left: 40%;
     width: 500px;
     text-align: left;
+    z-index: 1;
 }
 
 .comments {
@@ -12,5 +13,10 @@
     width: 700px;
     top: 400px;
     left: 10%;
+    z-index: 1;
+}
 
+.UpdateForm {
+    position: relative;
+    z-index: 2;
 }
