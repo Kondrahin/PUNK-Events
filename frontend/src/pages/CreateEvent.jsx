@@ -52,7 +52,10 @@ const CreateEvent = () => {
     return (
         <div className="CreateEvent">
             <CreateEventsNavigation/>
-            <MyButton onClick={() => setCreateEventModal(true)}>Создать мероприятие</MyButton>
+            <h1 className="display-4">Для того, чтобы создать мероприятие, нажмите на кнопку ниже.</h1>
+            <div className="position-absolute top-50 start-50 translate-middle">
+                <MyButton onClick={() => setCreateEventModal(true)}>Создать мероприятие</MyButton>
+            </div>
             <MyModal visible={createEventModal} setVisible={setCreateEventModal}>
                 <StyleRoot>
                     <div className="CreateForm" style={styles.zoomIn}>

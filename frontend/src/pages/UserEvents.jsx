@@ -4,6 +4,7 @@ import axios from "axios";
 import {useAsync} from "react-async";
 import {UserEventsNavigation} from "../components/UI/Navigation/Navigation";
 import Timeline from "../components/UI/timeline/Timeline";
+import toast from "react-hot-toast";
 
 
 const getUserEvents = async () => {
@@ -11,7 +12,21 @@ const getUserEvents = async () => {
     headers.params = {
         own_events: true
     }
-    const response = await axios.get(process.env.REACT_APP_BACKEND_API + "/events", headers)
+    try {
+        var response = await axios.get(process.env.REACT_APP_BACKEND_API + "/events", headers)
+    } catch (error) {
+        if (error.response) {
+            if (error.response.status === 403) {
+                toast('Войдите в свой аккаунт!', {icon: '🔒'});
+                return
+            }
+            if (error.response.status === 404) {
+                return null
+            }
+        }
+        toast('Что-то пошло не так, попробуйте позже...', {icon: '😥'});
+        return
+    }
     return response.data["events"]
 }
 
