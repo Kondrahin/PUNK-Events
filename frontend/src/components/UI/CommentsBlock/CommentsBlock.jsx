@@ -53,13 +53,14 @@ const CommentsBlock = ({comments, event_uuid}) => {
                             <h3 className="pull-left">Оставить комментарий</h3>
                             <fieldset>
                                 <div className="row">
-                                    <div className="form-group col-xs-12 col-sm-9 col-lg-10">
+                                    <div className="form-group">
                                     <textarea className="form-control" id="message" placeholder="Your comment"
-                                              required="" value={commentData} onChange={event => setCommentData(event.target.value)}/>
+                                              required="" value={commentData}
+                                              onChange={event => setCommentData(event.target.value)}/>
                                     </div>
                                 </div>
                             </fieldset>
-                            <button type="submit" className="btn btn-normal">Подтвердить</button>
+                            <button type="submit" className="btn btn-outline-primary">Подтвердить</button>
                         </form>
                         <div className="header">
                             <h4>Комментарии</h4>
