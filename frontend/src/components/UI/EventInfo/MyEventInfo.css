@@ -14,6 +14,15 @@
     text-align: center;
 }
 
+.button{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    top: 450px;
+    z-index: 2;
+}
+
 .comments {
     position: relative;
     overflow: auto;
@@ -28,4 +37,9 @@
 .UpdateForm {
     position: relative;
     z-index: 2;
+}
+
+.ParticipantsList {
+    position: relative;
+    z-index: 10;
 }

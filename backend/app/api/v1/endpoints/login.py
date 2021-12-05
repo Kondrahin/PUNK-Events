@@ -3,7 +3,6 @@ from typing import Any, Union
 
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi import APIRouter, HTTPException
-from loguru import logger
 from starlette import status
 from starlette.config import Config
 from starlette.requests import Request
@@ -50,7 +49,6 @@ async def auth(
     except OAuthError:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
 
-    logger.warning(token)
     id_token = token["id_token"]
     await api_adapter.get_token_data(id_token)
 
