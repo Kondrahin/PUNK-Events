@@ -10,6 +10,17 @@ import Radium, {StyleRoot} from "radium";
 import MyModal from "../modal/MyModal";
 import {zoomIn} from "react-animations";
 import UpdateEventForm from "../UpdateEvent/UpdateEventForm";
+import {hasKeyValue} from "../../../services/js_utils";
+import ParticipantsList from "../ParticipantsList/ParticipantsList";
+
+
+function showParticipantsList(setParticipantsList, participantsList) {
+    if (participantsList.length === 0) {
+        toast('Участники не найдены', {icon: '🙁'});
+        return null
+    }
+    setParticipantsList(true)
+}
 
 async function deleteEvent(event_uuid, navigate) {
     let headers = getHeaders()
@@ -33,9 +44,57 @@ async function deleteEvent(event_uuid, navigate) {
     return response.data
 }
 
+async function addParticipant(event_uuid, user_uuid) {
+    let headers = getHeaders()
+    headers.params = {
+        event_uuid: event_uuid,
+        participant_uuid: user_uuid
+    }
+    try {
+        var response = await axios.put(process.env.REACT_APP_BACKEND_API + "/events/participants", {}, headers)
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response)
+            if (error.response.status === 403) {
+                toast('Войдите в свой аккаунт!', {icon: '🔒'});
+                return
+            }
+        }
+        toast('Что-то пошло не так, попробуйте позже...', {icon: '😥'});
+        return
+    }
+    toast('Участник успешно добавлен!', {icon: '✅'});
+    window.location.reload()
+    return response.data
+}
 
-async function getEvent({data, navigate, setUpdateEventModal}) {
+
+async function deleteParticipant(event_uuid, user_uuid) {
+    let headers = getHeaders()
+    headers.params = {
+        event_uuid: event_uuid,
+        participant_uuid: user_uuid
+    }
+    try {
+        var response = await axios.delete(process.env.REACT_APP_BACKEND_API + "/events/participants", headers)
+    } catch (error) {
+        if (error.response) {
+            if (error.response.status === 403) {
+                toast('Войдите в свой аккаунт!', {icon: '🔒'});
+                return
+            }
+        }
+        toast('Что-то пошло не так, попробуйте позже...', {icon: '😥'});
+        return
+    }
+    toast('Участник успешно удален!', {icon: '✅'});
+    window.location.reload()
+    return response.data
+}
+
+async function getEvent({data, navigate, setUpdateEventModal, setParticipantsList}) {
     let buttons = null
+    let willGoButtons = []
     const moderators_uuids = await getModeratorsUUIDS()
 
     let eventInfo = data[0]
@@ -55,7 +114,31 @@ async function getEvent({data, navigate, setUpdateEventModal}) {
             </div>
         )
     }
-
+    if (hasKeyValue(eventInfo.participants, "uuid", user.uuid)) {
+        willGoButtons = (
+            <div>
+                <button type="submit" className="btn btn-outline-primary me-md-3"
+                        onClick={() => showParticipantsList(setParticipantsList, eventInfo.participants)}>Показать
+                    список участников
+                </button>
+                <button type="submit" className="btn btn-outline-danger me-md-3"
+                        onClick={() => deleteParticipant(eventInfo.uuid, user.uuid)}>Не пойду
+                </button>
+            </div>
+        )
+    } else {
+        willGoButtons = (
+            <div>
+                <button type="submit" className="btn btn-outline-primary me-md-3"
+                        onClick={() => showParticipantsList(setParticipantsList, eventInfo.participants)}>Показать
+                    список участников
+                </button>
+                <button type="submit" className="btn btn-outline-success me-md-3"
+                        onClick={() => addParticipant(eventInfo.uuid, user.uuid)}>Пойду
+                </button>
+            </div>
+        )
+    }
     return (
         <div>
             <div className="position-static">
@@ -66,13 +149,14 @@ async function getEvent({data, navigate, setUpdateEventModal}) {
                     <p className="lead">
                         {eventInfo.description}
                     </p>
-
                 </div>
                 <div className="position-absolute top-50 start-50 translate-middle-x">
                     <h6 className="lead"><b>Место проведения:</b> {eventInfo.location} <br/></h6>
                     <h6 className="lead"><b>Дата проведения:</b> {event_datetime.toLocaleDateString("ru", options)}</h6>
                 </div>
-
+                <div className="button">
+                    {willGoButtons}
+                </div>
             </div>
             {buttons}
             <div className="comments"><CommentsBlock comments={eventInfo.comments} event_uuid={eventInfo.uuid}/></div>
@@ -85,6 +169,8 @@ const MyEventInfo = ({eventData}) => {
 
     const navigate = useNavigate();
     const [updateEventModal, setUpdateEventModal] = useState(false)
+    const [participantsList, setParticipantsList] = useState(false)
+
     let eventInfo = eventData[0]
 
     async function updateEvent(event) {
@@ -127,7 +213,8 @@ const MyEventInfo = ({eventData}) => {
         promiseFn: getEvent,
         navigate: navigate,
         data: eventData,
-        setUpdateEventModal: setUpdateEventModal
+        setUpdateEventModal: setUpdateEventModal,
+        setParticipantsList: setParticipantsList
     })
 
     if (isPending) return "Loading..."
@@ -144,6 +231,16 @@ const MyEventInfo = ({eventData}) => {
                         </StyleRoot>
                     </MyModal>
                 </div>
+                {participantsList && <div className="ParticipantsList">
+                    <MyModal visible={participantsList} setVisible={setParticipantsList}>
+                        <StyleRoot>
+                            <div style={styles.zoomIn}>
+                                <ParticipantsList participantsList={eventInfo.participants}/>
+                            </div>
+                        </StyleRoot>
+                    </MyModal>
+                </div>
+                }
                 {data}
             </div>
         );

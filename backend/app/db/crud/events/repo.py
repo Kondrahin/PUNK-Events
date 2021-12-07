@@ -3,10 +3,11 @@ import uuid
 from datetime import datetime
 from typing import List, Optional
 
+import sqlalchemy as sa
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.exc import NoResultFound
 
-from app.db.models import Event, User
+from app.db.models import Event, association_table
 from app.db.sqlalchemy import session_fabric
 from app.schemas.event import CreateUpdateEventSchema, EventSchema
 
@@ -22,11 +23,13 @@ class EventRepo:
             creator=creator,
             created_datetime=datetime.now(),
         )
-        event = await Event.get(uuid=event_uuid)
-        user = await User.get(uuid=creator)
         session = session_fabric.get_session()
+        query = sa.insert(association_table).values(
+            user_uuid=creator, event_uuid=event_uuid
+        )
         async with session.begin():
-            event.participants = [user]
+            await session.execute(query)
+
         return event_uuid
 
     async def update_event(
@@ -74,3 +77,22 @@ class EventRepo:
 
         events = [EventSchema.from_orm(event) for event in events]
         return sorted(events, key=lambda event: event.event_datetime, reverse=True)
+
+    async def add_participant(self, event_uuid: UUID, participant_uuid: UUID) -> None:
+        session = session_fabric.get_session()
+        query = sa.insert(association_table).values(
+            user_uuid=participant_uuid, event_uuid=event_uuid
+        )
+        async with session.begin():
+            await session.execute(query)
+
+    async def delete_participant(
+        self, event_uuid: UUID, participant_uuid: UUID
+    ) -> None:
+        session = session_fabric.get_session()
+        query = sa.delete(association_table).where(
+            association_table.c.user_uuid == participant_uuid,
+            association_table.c.event_uuid == event_uuid,
+        )
+        async with session.begin():
+            await session.execute(query)
