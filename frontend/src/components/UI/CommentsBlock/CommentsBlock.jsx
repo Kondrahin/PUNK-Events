@@ -68,11 +68,9 @@ const CommentsBlock = ({comments, event_uuid}) => {
                         <div>
                             <Comment comments={comments}/>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
