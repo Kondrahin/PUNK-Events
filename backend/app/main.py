@@ -4,6 +4,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.api.v1.routers import api_router
+from app.db.error_handlers.db import db_not_raise_up_handler
 from app.settings.config import get_app_settings
 from app.settings.events import shutdown, startup
 
@@ -31,6 +32,8 @@ def get_application() -> FastAPI:
 
     application.add_event_handler("shutdown", shutdown())
     application.add_middleware(SessionMiddleware, secret_key=config.SECRET_KEY)
+
+    application.add_exception_handler(OSError, db_not_raise_up_handler)
     application.include_router(api_router)
 
     return application
